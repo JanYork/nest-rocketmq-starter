@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MessageModule } from '../lib/rocketmq.module';
+import { MessageModule } from '../lib';
 import { MessageListenerImpl } from './examples/message.listener';
 
 @Module({

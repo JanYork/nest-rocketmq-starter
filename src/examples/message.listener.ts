@@ -6,7 +6,7 @@ import {
   OnMessage,
   OnStart,
   OnStop,
-} from '../../lib/decorator';
+} from '../../lib';
 import Logger from 'rocketmq-grpc/lib/logger';
 
 @MessageListenerServer({
