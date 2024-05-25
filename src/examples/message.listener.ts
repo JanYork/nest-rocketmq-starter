@@ -1,4 +1,4 @@
-import { MessageResult, MessageView } from 'rocketmq-grpc';
+import { Logger, MessageResult, MessageView } from 'rocketmq-grpc';
 import { Injectable } from '@nestjs/common';
 import {
   MessageListenerServer,
@@ -7,7 +7,6 @@ import {
   OnStart,
   OnStop,
 } from '../../lib';
-import Logger from 'rocketmq-grpc/lib/logger';
 
 @MessageListenerServer({
   namespace: 'checkout',
