@@ -21,8 +21,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.2
       rocketmq-grpc:
-        specifier: 0.2.8
-        version: 0.2.8
+        specifier: 0.2.9
+        version: 0.2.9
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -542,28 +542,24 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@node-rs/crc32-linux-arm64-musl@1.10.3':
     resolution: {integrity: sha512-fsxOk9CpFzyon+vktvCICwhGk0b+tnfEZfPOXa3QDrkyZD7R7cHmpEHGim1BYgJZIJSTBfal5eM11hzBGjJbxw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@node-rs/crc32-linux-x64-gnu@1.10.3':
     resolution: {integrity: sha512-0zIX68FIeqpRMRNvmB5AgONnLMm628+8mV9UDuCRmGppME8WGnY+Dirx+TPUeTJ4f27+in+6CU4u6LJDi9cXmQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@node-rs/crc32-linux-x64-musl@1.10.3':
     resolution: {integrity: sha512-dKKt0FEm8JDp2MvIu1J7vg8Dc5D5upNO6LAuvfShq9Hy8hYNQWy6f+AF8mSm/c5wWnjn+pv7I1+jvrZIe6wMig==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@node-rs/crc32-wasm32-wasi@1.10.3':
     resolution: {integrity: sha512-oT2V4r0lGZqZHkFLHeXu5Z8C8SutIvBVV0Ws3unz4/KhwmlMcOZYRmSelUSSILbjNLrg4FihCe20tC1VbmaNxA==}
@@ -2461,8 +2457,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  rocketmq-grpc@0.2.8:
-    resolution: {integrity: sha512-qqgykdRw1vEXjfzmY1LtG0zj5kfduWylBdtEOcgmANL4EwFMfpqqHRjAv4ZN+cE7PTzIMkT2mYhBJK6W2QHdtA==}
+  rocketmq-grpc@0.2.9:
+    resolution: {integrity: sha512-GdTAveq8h5Uwa6wV+1nVzgGxaax61UBjyjMzR3WKiQpn4s9UTUMX4fM11A9D7HtRqUKP2umrqVj2CHQ6Y04ttg==}
 
   run-async@2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
@@ -5759,7 +5755,7 @@ snapshots:
     dependencies:
       glob: 9.3.5
 
-  rocketmq-grpc@0.2.8:
+  rocketmq-grpc@0.2.9:
     dependencies:
       '@grpc/grpc-js': 1.10.8
       '@grpc/proto-loader': 0.7.13
