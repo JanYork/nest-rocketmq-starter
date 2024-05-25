@@ -27,7 +27,7 @@ export class ConsumerFactory implements OnApplicationBootstrap {
    * 服务容器
    * @private
    */
-  readonly #SERVER: Map<string, PushConsumer>;
+  readonly #SERVER: Map<string, PushConsumer> = new Map();
 
   constructor(
     private readonly discoveryService: DiscoveryService,
@@ -126,7 +126,12 @@ export class ConsumerFactory implements OnApplicationBootstrap {
 
       try {
         await consumer.startup().then(() => {
-          console.log('Consumer started:', consumer.id);
+          options.logger?.info({
+            message: 'Consumer started: ' + consumer.id,
+            context: {
+              id: consumer.id,
+            },
+          });
           this.#SERVER.set(consumer.id, consumer);
         });
       } catch (e) {
