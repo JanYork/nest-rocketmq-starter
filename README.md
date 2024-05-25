@@ -1,73 +1,120 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## 描述
+这个项目可以让你在NestJS项目中快速使用RocketMQ进行消息消费和生产，它基于[rocketmq-grpc](https://www.npmjs.com/package/rocketmq-grpc)实现。
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+## 安装
 
 ```bash
-$ pnpm install
+$ pnpm install @nestjs/rocketmq-grpc
+
+or
+
+$ npm install @nestjs/rocketmq-grpc
+
+or
+
+$ yarn add @nestjs/rocketmq-grpc
 ```
 
-## Running the app
+## 使用
+
+### 构建一个监听器
+```ts
+@Injectable()
+export class MessageListenerImpl {
+
+}
+```
+
+### 使用装饰器
+```ts
+import { MessageResult, MessageView } from 'rocketmq-grpc';
+import { Injectable } from '@nestjs/common';
+import {
+  MessageListenerServer,
+  OnError,
+  OnMessage,
+  OnStart,
+  OnStop,
+} from '../../lib';
+import Logger from 'rocketmq-grpc/lib/logger';
+
+// 标记为消息监听服务
+@MessageListenerServer({
+  namespace: 'checkout',
+  consumerGroup: 'checkout-fifo-group',
+  endpoints: '192.168.1.162:8081',
+  subscriptions: new Map().set('checkout-fifo-topic', '*'),
+  requestTimeout: 3000,
+  awaitDuration: 30000,
+  longPollingInterval: 300,
+  isFifo: true,
+  logger: new Logger(),
+})
+@Injectable()
+export class MessageListenerImpl {
+  @OnMessage()
+  message(message: MessageView): MessageResult {
+    console.log('Received message: %o', message.body.toString());
+    return MessageResult.SUCCESS;
+  }
+
+  @OnStart()
+  start(): void {
+    console.log('Listener started.');
+  }
+
+  @OnStop()
+  stop(): void {
+    console.log('Listener stopped.');
+  }
+
+  @OnError()
+  error(error: Error): void {
+    console.error('Listener error:', error);
+  }
+}
+```
+
+在对应的方法上使用装饰器，这样就可以监听到对应的事件。
+
+- `@OnMessage()`：监听消息事件
+- `@OnStart()`：监听启动事件
+- `@OnStop()`：监听停止事件
+- `@OnError()`：监听错误事件
+
+> ⚠️ 注意：@MessageListenerServer必须配合@Injecable使用，否则无法正常工作。
+> 
+> ⚠️ 注意：@OnMessage()方法必须被使用并且返回MessageResult类型，否则无法正常工作。
+> 
+> ⚠️ 注意：装饰器不可叠加、不可重复使用，一个类中只能使用一次。
+
+### 参数
+对于配置参数，可以查阅[rocketmq-grpc](https://www.npmjs.com/package/rocketmq-grpc)。
+
+## 测试
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
+# 运行项目
 $ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
 ```
 
-## Test
+如果你可以看到以下内容在控制台中，那么说明项目已经正常运行。
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+INFO: Begin to startup the rocketmq client {"clientId":"JanYorkMacBook-Pro.local@81207@0@lwlu3gya"}
+[Nest] 81207  - 05/25/2024, 4:13:40 PM     LOG [NestApplication] Nest application successfully started +33ms
+INFO: Receive settings from remote {"endpoints":{"addressesList":[{"host":"192.168.1.162","port":8081}],"scheme":1,"facade":"192.168.1.162:8081"},"clientId":"JanYorkMacBook-Pro.local@81207@0@lwlu3gya"}
+INFO: Sync settings {"settings":{"clientId":"JanYorkMacBook-Pro.local@81207@0@lwlu3gya","clientType":3,"accessPoint":{"addressesList":[{"host":"192.168.1.162","port":8081}],"scheme":1,"facade":"192.168.1.162:8081"},"namespace":"checkout","requestTimeout":3000,"longPollingTimeout":30000,"group":"checkout-fifo-group","subscriptionExpressions":{},"maxMessageNum":1,"isFifo":true,"invisibleDuration":15000}}
+INFO: Startup the rocketmq client successfully {"clientId":"JanYorkMacBook-Pro.local@81207@0@lwlu3gya"}
 ```
+然后你可以生产一些消息，如果你不会生产消息，请查阅[rocketmq-grpc](https://www.npmjs.com/package/rocketmq-grpc)。
 
-## Support
+## 支持
+如果发现任何问题，请在[这里](https://github.com/JanYork/nest-rocketmq-starter/issues)提出。
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+或者你也可以通过邮件联系我：[@JanYork](mailto:747945307@qq.com)。
 
 ## License
+The project is [Apache licensed](LICENSE).
 
-Nest is [MIT licensed](LICENSE).
+The project is created by [NestJS](https://nestjs.com/).
