@@ -1,7 +1,7 @@
 {
   "name": "nestjs-rocketmq-starter",
-  "version": "0.0.1",
-  "description": "·",
+  "version": "0.3.1",
+  "description": "在NestJS项目中快速使用RocketMQ进行消息消费和生产，它基于rocketmq-grpc实现",
   "author": "JanYork <747945307@qq.com>",
   "license": "Apache-2.0",
   "main": "dist/lib/index.js",
@@ -38,7 +38,7 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "reflect-metadata": "^0.2.0",
-    "rocketmq-grpc": "0.2.9",
+    "rocketmq-grpc": "0.3.0",
     "rxjs": "^7.8.1"
   },
   "devDependencies": {

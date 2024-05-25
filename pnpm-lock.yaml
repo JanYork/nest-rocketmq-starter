@@ -21,8 +21,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.2
       rocketmq-grpc:
-        specifier: 0.2.9
-        version: 0.2.9
+        specifier: 0.3.0
+        version: 0.3.0
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -2457,8 +2457,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  rocketmq-grpc@0.2.9:
-    resolution: {integrity: sha512-GdTAveq8h5Uwa6wV+1nVzgGxaax61UBjyjMzR3WKiQpn4s9UTUMX4fM11A9D7HtRqUKP2umrqVj2CHQ6Y04ttg==}
+  rocketmq-grpc@0.3.0:
+    resolution: {integrity: sha512-cwm0sIEhxElX3cTwDN3BJSTyAMHDQLrto6iTDpSnilYijZshUerRYcPMffJtkOrEs/+JBHji6kF9cjWSExudOQ==}
 
   run-async@2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
@@ -5755,7 +5755,7 @@ snapshots:
     dependencies:
       glob: 9.3.5
 
-  rocketmq-grpc@0.2.9:
+  rocketmq-grpc@0.3.0:
     dependencies:
       '@grpc/grpc-js': 1.10.8
       '@grpc/proto-loader': 0.7.13
