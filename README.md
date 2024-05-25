@@ -4,15 +4,15 @@
 ## 安装
 
 ```bash
-$ pnpm install @nestjs/rocketmq-grpc
+$ pnpm install nestjs-rocketmq-starter
 
 or
 
-$ npm install @nestjs/rocketmq-grpc
+$ npm install nestjs-rocketmq-starter
 
 or
 
-$ yarn add @nestjs/rocketmq-grpc
+$ yarn add nestjs-rocketmq-starter
 ```
 
 ## 使用
@@ -116,5 +116,3 @@ INFO: Startup the rocketmq client successfully {"clientId":"JanYorkMacBook-Pro.l
 
 ## License
 The project is [Apache licensed](LICENSE).
-
-The project is created by [NestJS](https://nestjs.com/).
